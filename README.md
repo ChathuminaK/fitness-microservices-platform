@@ -50,13 +50,13 @@ This project implements a **Microservices Architecture** for a Fitness Managemen
 
 ### Why Microservices?
 
-| Aspect | Monolith | Microservices (This Project) |
-|---|---|---|
-| Deployment | All-or-nothing | Each service deploys independently |
-| Scaling | Scale entire app | Scale only bottleneck service |
-| Fault isolation | One bug crashes all | Failure stays in one service |
-| Team structure | All devs share code | Each member owns a service |
-| Technology | One stack | Each service chooses its stack |
+| Aspect          | Monolith            | Microservices (This Project)       |
+| --------------- | ------------------- | ---------------------------------- |
+| Deployment      | All-or-nothing      | Each service deploys independently |
+| Scaling         | Scale entire app    | Scale only bottleneck service      |
+| Fault isolation | One bug crashes all | Failure stays in one service       |
+| Team structure  | All devs share code | Each member owns a service         |
+| Technology      | One stack           | Each service chooses its stack     |
 
 ---
 
@@ -141,6 +141,7 @@ fitness-management-system/
 - **Postman** (optional, for testing) — [Download](https://postman.com)
 
 Verify your installation:
+
 ```bash
 node --version   # should print v16.x.x or higher
 npm --version    # should print 8.x.x or higher
@@ -183,11 +184,13 @@ cd api-gateway       && npm install && cd ..
 ### Option A — Automated (Recommended)
 
 **Windows:**
+
 ```
 Double-click start-all.bat
 ```
 
 **Mac / Linux:**
+
 ```bash
 chmod +x start-all.sh
 ./start-all.sh
@@ -197,8 +200,8 @@ chmod +x start-all.sh
 
 Open **5 terminal windows** and run one command in each:
 
-| Terminal | Command | Port |
-|---|---|---|
+| Terminal   | Command                             | Port |
+| ---------- | ----------------------------------- | ---- |
 | Terminal 1 | `cd user-service && npm start`      | 3001 |
 | Terminal 2 | `cd workout-service && npm start`   | 3002 |
 | Terminal 3 | `cd progress-service && npm start`  | 3003 |
@@ -208,6 +211,7 @@ Open **5 terminal windows** and run one command in each:
 ### Verify everything is running
 
 Open your browser and visit:
+
 ```
 http://localhost:8080/gateway/status
 ```
@@ -219,49 +223,50 @@ You should see all 4 services reporting `"status": "UP"`.
 ## 📡 API Endpoints
 
 All endpoints can be accessed **two ways**:
-1. **Via API Gateway** → `http://localhost:8080/api/...` *(recommended)*
+
+1. **Via API Gateway** → `http://localhost:8080/api/...` _(recommended)_
 2. **Direct access** → `http://localhost:300X/api/...`
 
 ### 👤 User Service
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/users/register` | Register a new user |
-| POST | `/api/users/login` | Login and receive JWT |
-| GET  | `/api/users` | Get all users |
-| GET  | `/api/users/:id` | Get user by ID |
-| PUT  | `/api/users/:id` | Update user profile |
-| DELETE | `/api/users/:id` | Delete user |
+| Method | Endpoint              | Description           |
+| ------ | --------------------- | --------------------- |
+| POST   | `/api/users/register` | Register a new user   |
+| POST   | `/api/users/login`    | Login and receive JWT |
+| GET    | `/api/users`          | Get all users         |
+| GET    | `/api/users/:id`      | Get user by ID        |
+| PUT    | `/api/users/:id`      | Update user profile   |
+| DELETE | `/api/users/:id`      | Delete user           |
 
 ### 💪 Workout Service
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/workouts` | Create workout plan |
-| GET  | `/api/workouts` | Get all workouts |
-| GET  | `/api/workouts/:id` | Get workout by ID |
-| PUT  | `/api/workouts/:id` | Update workout |
-| DELETE | `/api/workouts/:id` | Delete workout |
+| Method | Endpoint            | Description         |
+| ------ | ------------------- | ------------------- |
+| POST   | `/api/workouts`     | Create workout plan |
+| GET    | `/api/workouts`     | Get all workouts    |
+| GET    | `/api/workouts/:id` | Get workout by ID   |
+| PUT    | `/api/workouts/:id` | Update workout      |
+| DELETE | `/api/workouts/:id` | Delete workout      |
 
 ### 📈 Progress Service
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/progress` | Add progress entry (auto-calculates BMI) |
-| GET  | `/api/progress` | Get all progress entries |
-| GET  | `/api/progress/:id` | Get entry by ID |
-| PUT  | `/api/progress/:id` | Update entry |
-| DELETE | `/api/progress/:id` | Delete entry |
+| Method | Endpoint            | Description                              |
+| ------ | ------------------- | ---------------------------------------- |
+| POST   | `/api/progress`     | Add progress entry (auto-calculates BMI) |
+| GET    | `/api/progress`     | Get all progress entries                 |
+| GET    | `/api/progress/:id` | Get entry by ID                          |
+| PUT    | `/api/progress/:id` | Update entry                             |
+| DELETE | `/api/progress/:id` | Delete entry                             |
 
 ### 🥗 Nutrition Service
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/nutrition` | Add meal plan (auto-calculates macros) |
-| GET  | `/api/nutrition` | Get all meals |
-| GET  | `/api/nutrition/:id` | Get meal by ID |
-| PUT  | `/api/nutrition/:id` | Update meal |
-| DELETE | `/api/nutrition/:id` | Delete meal |
+| Method | Endpoint             | Description                            |
+| ------ | -------------------- | -------------------------------------- |
+| POST   | `/api/nutrition`     | Add meal plan (auto-calculates macros) |
+| GET    | `/api/nutrition`     | Get all meals                          |
+| GET    | `/api/nutrition/:id` | Get meal by ID                         |
+| PUT    | `/api/nutrition/:id` | Update meal                            |
+| DELETE | `/api/nutrition/:id` | Delete meal                            |
 
 ---
 
@@ -269,13 +274,13 @@ All endpoints can be accessed **two ways**:
 
 Each service exposes full OpenAPI (Swagger) documentation:
 
-| Service | Direct Swagger URL | Via Gateway |
-|---|---|---|
-| API Gateway | http://localhost:8080/api-docs | — |
-| User Service | http://localhost:3001/api-docs | — |
-| Workout Service | http://localhost:3002/api-docs | — |
-| Progress Service | http://localhost:3003/api-docs | — |
-| Nutrition Service | http://localhost:3004/api-docs | — |
+| Service           | Direct Swagger URL             | Via Gateway |
+| ----------------- | ------------------------------ | ----------- |
+| API Gateway       | http://localhost:8080/api-docs | —           |
+| User Service      | http://localhost:3001/api-docs | —           |
+| Workout Service   | http://localhost:3002/api-docs | —           |
+| Progress Service  | http://localhost:3003/api-docs | —           |
+| Nutrition Service | http://localhost:3004/api-docs | —           |
 
 > **For the assignment:** Screenshot both the **native Swagger URL** (e.g., `http://localhost:3001/api-docs`) AND after accessing via gateway (`http://localhost:8080/api-docs`) to demonstrate that both work.
 
@@ -286,6 +291,7 @@ Each service exposes full OpenAPI (Swagger) documentation:
 ### Problem: Multiple Ports
 
 Without a gateway, a client must know and call **4 different ports**:
+
 - Users → `:3001`
 - Workouts → `:3002`
 - Progress → `:3003`
@@ -316,8 +322,12 @@ POST http://localhost:8080/api/nutrition
 The gateway uses `http-proxy-middleware` to transparently forward requests:
 
 ```javascript
-app.use('/api/users',
-  createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true })
+app.use(
+  "/api/users",
+  createProxyMiddleware({
+    target: "http://localhost:3001",
+    changeOrigin: true,
+  }),
 );
 ```
 
@@ -337,12 +347,12 @@ The gateway also adds headers (`X-Gateway`, `X-Forwarded-From`) so downstream se
 
 ## 👥 Team Contributions
 
-| Member | Microservice | Port | Responsibilities |
-|---|---|---|---|
-| Member 1 | User Service | 3001 | User registration, authentication (JWT), profile CRUD |
-| Member 2 | Workout Service | 3002 | Workout plan creation, exercise tracking, status management |
-| Member 3 | Progress Service | 3003 | Progress tracking, BMI calculation, history management |
-| Member 4 | Nutrition Service | 3004 | Meal planning, macro calculation, dietary tracking |
+| Member   | Microservice      | Port | Responsibilities                                            |
+| -------- | ----------------- | ---- | ----------------------------------------------------------- |
+| Member 1 | User Service      | 3001 | User registration, authentication (JWT), profile CRUD       |
+| Member 2 | Workout Service   | 3002 | Workout plan creation, exercise tracking, status management |
+| Member 3 | Progress Service  | 3003 | Progress tracking, BMI calculation, history management      |
+| Member 4 | Nutrition Service | 3004 | Meal planning, macro calculation, dietary tracking          |
 
 > **Note:** API Gateway was a shared responsibility. Each member also contributed to documentation and Swagger specs for their service.
 
@@ -350,19 +360,19 @@ The gateway also adds headers (`X-Gateway`, `X-Forwarded-From`) so downstream se
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Node.js | Runtime environment |
-| Express.js | HTTP framework |
-| http-proxy-middleware | API Gateway proxying |
-| swagger-jsdoc | OpenAPI spec generation from JSDoc |
-| swagger-ui-express | Swagger UI rendering |
-| bcryptjs | Password hashing |
-| jsonwebtoken | JWT authentication |
-| uuid | Unique ID generation |
-| dotenv | Environment configuration |
-| cors | Cross-Origin Resource Sharing |
-| body-parser | Request body parsing |
+| Technology            | Purpose                            |
+| --------------------- | ---------------------------------- |
+| Node.js               | Runtime environment                |
+| Express.js            | HTTP framework                     |
+| http-proxy-middleware | API Gateway proxying               |
+| swagger-jsdoc         | OpenAPI spec generation from JSDoc |
+| swagger-ui-express    | Swagger UI rendering               |
+| bcryptjs              | Password hashing                   |
+| jsonwebtoken          | JWT authentication                 |
+| uuid                  | Unique ID generation               |
+| dotenv                | Environment configuration          |
+| cors                  | Cross-Origin Resource Sharing      |
+| body-parser           | Request body parsing               |
 
 ---
 
