@@ -1,0 +1,16 @@
+
+> user-service@1.0.0 start
+> node server.js
+
+
+✅ user-service running on port 3001
+📖 Swagger UI: http://localhost:3001/api-docs
+🏥 Health:     http://localhost:3001/health
+
+[user-service] 2026-03-26T12:38:50.208Z GET /api-docs
+[user-service] 2026-03-26T12:38:50.224Z GET /api-docs/
+[user-service] 2026-03-26T12:38:50.243Z GET /api-docs/swagger-ui.css
+[user-service] 2026-03-26T12:38:50.245Z GET /api-docs/swagger-ui-bundle.js
+[user-service] 2026-03-26T12:38:50.251Z GET /api-docs/swagger-ui-standalone-preset.js
+[user-service] 2026-03-26T12:38:50.254Z GET /api-docs/swagger-ui-init.js
+[user-service] 2026-03-26T12:38:50.726Z GET /api-docs/favicon-32x32.png

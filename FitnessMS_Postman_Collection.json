@@ -1,0 +1,352 @@
+{
+  "info": {
+    "_postman_id": "fitness-mgmt-system-2026",
+    "name": "Fitness Management System — IT4020",
+    "description": "Complete Postman collection for Fitness Management System microservices.\n\nIncludes requests for:\n- Direct service access (ports 3001–3004)\n- Via API Gateway (port 8080)\n\nRun via Gateway at localhost:8080 for assignment demonstration.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "gateway_url",   "value": "http://localhost:8080",  "type": "string" },
+    { "key": "user_url",      "value": "http://localhost:3001",  "type": "string" },
+    { "key": "workout_url",   "value": "http://localhost:3002",  "type": "string" },
+    { "key": "progress_url",  "value": "http://localhost:3003",  "type": "string" },
+    { "key": "nutrition_url", "value": "http://localhost:3004",  "type": "string" },
+    { "key": "user_id",       "value": "",                       "type": "string" },
+    { "key": "workout_id",    "value": "",                       "type": "string" },
+    { "key": "progress_id",   "value": "",                       "type": "string" },
+    { "key": "meal_id",       "value": "",                       "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "🌐 API Gateway",
+      "item": [
+        {
+          "name": "Gateway Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/health",
+            "description": "Check if API Gateway is running"
+          }
+        },
+        {
+          "name": "All Services Status",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/gateway/status",
+            "description": "Ping all downstream microservices and report status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 User Service (via Gateway)",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "  pm.collectionVariables.set('user_id', json.data.id);",
+                  "  console.log('Saved user_id:', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/users/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"age\": 25,\n  \"gender\": \"male\",\n  \"fitnessGoal\": \"Lose weight and build muscle\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/users/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/users"
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/users/{{user_id}}"
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/users/{{user_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Updated\",\n  \"age\": 26,\n  \"fitnessGoal\": \"Build muscle mass\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway_url}}/api/users/{{user_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "💪 Workout Service (via Gateway)",
+      "item": [
+        {
+          "name": "Create Workout Plan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "  pm.collectionVariables.set('workout_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/workouts",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{user_id}}\",\n  \"title\": \"Morning Strength Training\",\n  \"description\": \"Full body strength workout\",\n  \"type\": \"strength\",\n  \"duration\": 45,\n  \"scheduledDate\": \"2026-03-31\",\n  \"exercises\": [\n    { \"name\": \"Push-ups\", \"sets\": 3, \"reps\": 15, \"restSeconds\": 60 },\n    { \"name\": \"Squats\",   \"sets\": 4, \"reps\": 12, \"restSeconds\": 90 },\n    { \"name\": \"Pull-ups\", \"sets\": 3, \"reps\": 8,  \"restSeconds\": 90 }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Workouts",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/workouts"
+          }
+        },
+        {
+          "name": "Get Workout by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/workouts/{{workout_id}}"
+          }
+        },
+        {
+          "name": "Update Workout",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/workouts/{{workout_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Evening HIIT Session\",\n  \"type\": \"hiit\",\n  \"duration\": 30,\n  \"status\": \"completed\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Workout",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway_url}}/api/workouts/{{workout_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "📈 Progress Service (via Gateway)",
+      "item": [
+        {
+          "name": "Add Progress Entry",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "  pm.collectionVariables.set('progress_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/progress",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{user_id}}\",\n  \"weightKg\": 72.5,\n  \"heightCm\": 175,\n  \"bodyFatPercent\": 18.5,\n  \"muscleMassKg\": 35.2,\n  \"notes\": \"End of week 1 measurement\",\n  \"recordedDate\": \"2026-03-25\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Progress",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/progress"
+          }
+        },
+        {
+          "name": "Get Progress by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/progress/{{progress_id}}"
+          }
+        },
+        {
+          "name": "Update Progress Entry",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/progress/{{progress_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"weightKg\": 71.0,\n  \"bodyFatPercent\": 17.8,\n  \"notes\": \"End of week 2 — lost 1.5 kg!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Progress Entry",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway_url}}/api/progress/{{progress_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🥗 Nutrition Service (via Gateway)",
+      "item": [
+        {
+          "name": "Add Meal Plan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "  pm.collectionVariables.set('meal_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/nutrition",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{user_id}}\",\n  \"mealName\": \"Post-workout meal\",\n  \"mealType\": \"post-workout\",\n  \"scheduledDate\": \"2026-03-25\",\n  \"notes\": \"High protein recovery meal\",\n  \"items\": [\n    { \"name\": \"Chicken Breast\", \"quantity\": \"150g\", \"calories\": 248, \"proteinG\": 46.5, \"carbsG\": 0,  \"fatG\": 5.4 },\n    { \"name\": \"Brown Rice\",     \"quantity\": \"100g\", \"calories\": 130, \"proteinG\": 2.7,  \"carbsG\": 28, \"fatG\": 1.0 },\n    { \"name\": \"Broccoli\",      \"quantity\": \"80g\",  \"calories\": 27,  \"proteinG\": 1.8,  \"carbsG\": 5.2, \"fatG\": 0.3 }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Meals",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/nutrition"
+          }
+        },
+        {
+          "name": "Get Meal by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway_url}}/api/nutrition/{{meal_id}}"
+          }
+        },
+        {
+          "name": "Update Meal",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{gateway_url}}/api/nutrition/{{meal_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mealName\": \"Updated Meal Plan\",\n  \"notes\": \"Adjusted calories for cut phase\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Meal",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway_url}}/api/nutrition/{{meal_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔗 Direct Service Access (No Gateway)",
+      "item": [
+        {
+          "name": "User Service Health (direct)",
+          "request": { "method": "GET", "url": "{{user_url}}/health" }
+        },
+        {
+          "name": "Workout Service Health (direct)",
+          "request": { "method": "GET", "url": "{{workout_url}}/health" }
+        },
+        {
+          "name": "Progress Service Health (direct)",
+          "request": { "method": "GET", "url": "{{progress_url}}/health" }
+        },
+        {
+          "name": "Nutrition Service Health (direct)",
+          "request": { "method": "GET", "url": "{{nutrition_url}}/health" }
+        },
+        {
+          "name": "Register User (direct :3001)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{user_url}}/api/users/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Direct User\",\n  \"email\": \"direct@example.com\",\n  \"password\": \"password123\",\n  \"age\": 28,\n  \"gender\": \"female\",\n  \"fitnessGoal\": \"Improve endurance\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Workout (direct :3002)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{workout_url}}/api/workouts",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Cardio Day\",\n  \"type\": \"cardio\",\n  \"duration\": 30\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

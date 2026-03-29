@@ -1,0 +1,15 @@
+{
+  "name": "fitness-management-system",
+  "version": "1.0.0",
+  "description": "Fitness Management System — Microservices Architecture (IT4020 Assignment 2)",
+  "scripts": {
+    "install:all": "cd user-service && npm install && cd ../workout-service && npm install && cd ../progress-service && npm install && cd ../nutrition-service && npm install && cd ../api-gateway && npm install",
+    "start:user":      "cd user-service && npm start",
+    "start:workout":   "cd workout-service && npm start",
+    "start:progress":  "cd progress-service && npm start",
+    "start:nutrition": "cd nutrition-service && npm start",
+    "start:gateway":   "cd api-gateway && npm start"
+  },
+  "author": "SLIIT IT4020 Group",
+  "license": "ISC"
+}
