@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       { url: 'http://localhost:3003', description: 'Direct access - Progress Service' },
-      { url: 'http://localhost:8080', description: 'Via API Gateway' },
+      { url: 'http://localhost:8085', description: 'Via API Gateway' },
     ],
     tags: [{ name: 'Progress', description: 'Fitness progress tracking endpoints' }],
   },

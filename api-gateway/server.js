@@ -89,7 +89,7 @@ const gatewaySwaggerSpec = {
     description: `
 ## Fitness Management System — Microservices API Gateway
 
-All requests are routed through this single gateway on **port 8080**.
+All requests are routed through this single gateway on **port 8085**.
 
 ### Route Mappings
 | Gateway Path        | Downstream Service  | Port |
@@ -107,7 +107,7 @@ All requests are routed through this single gateway on **port 8080**.
     `,
   },
   servers: [
-    { url: 'http://localhost:8080', description: 'API Gateway (port 8080)' },
+    { url: 'http://localhost:8085', description: 'API Gateway (port 8085)' },
   ],
   tags: [
     { name: 'Users',     description: 'User registration, login, and profile management' },
@@ -460,7 +460,7 @@ const makeProxy = (target, pathPrefix) =>
       proxyReq: (proxyReq, req) => {
         // Add gateway header so downstream services know the request came through the gateway
         proxyReq.setHeader('X-Gateway', 'fitness-api-gateway');
-        proxyReq.setHeader('X-Forwarded-From', 'api-gateway:8080');
+        proxyReq.setHeader('X-Forwarded-From', 'api-gateway:8085');
         // Log forwarding
         console.log(`[API-GATEWAY] Forwarding ${req.method} ${req.url} → ${target}${req.url}`);
       },
